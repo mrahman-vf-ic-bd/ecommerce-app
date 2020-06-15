@@ -23,6 +23,8 @@
 		0A9751AA248344FC00DAACF4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9751A9248344FC00DAACF4 /* Constants.swift */; };
 		0A9751B02483617200DAACF4 /* FUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9751AF2483617200DAACF4 /* FUser.swift */; };
 		0A9751B224836F8000DAACF4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9751B124836F8000DAACF4 /* Settings.swift */; };
+		0AEA324B2494E10300F49418 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0AEA32492494E10300F49418 /* ProgressHUD.bundle */; };
+		0AEA324C2494E10300F49418 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AEA324A2494E10300F49418 /* ProgressHUD.m */; };
 		84FCC0DC0456502817D34879 /* Pods_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AEB2AA5DC65E14B2BB99B2 /* Pods_AppTests.framework */; };
 		8A051C76DD5FB7DEB9BC21D0 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D06BAEB703FB1AF8C050D6F /* Pods_App.framework */; };
 		DA56E103D525C0699C22030E /* Pods_App_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D592CBB08D3C939763C94766 /* Pods_App_AppUITests.framework */; };
@@ -69,6 +71,9 @@
 		0A9751AB2483455600DAACF4 /* App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "App-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A9751AF2483617200DAACF4 /* FUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUser.swift; sourceTree = "<group>"; };
 		0A9751B124836F8000DAACF4 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0AEA32482494E10300F49418 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		0AEA32492494E10300F49418 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		0AEA324A2494E10300F49418 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		1A6BEC9F1E3E2E4882EA9420 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		393C339890B491A173D905F6 /* Pods-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTests.release.xcconfig"; path = "Target Support Files/Pods-AppTests/Pods-AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A495D6A43EB41D16BBB482F /* Pods-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-AppTests/Pods-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,6 +178,7 @@
 				0A9751A72483439F00DAACF4 /* GoogleService-Info.plist */,
 				0A975185248342C700DAACF4 /* Info.plist */,
 				0A9751AB2483455600DAACF4 /* App-Bridging-Header.h */,
+				0AEA32472494E10300F49418 /* ProgressHUD */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -194,6 +200,16 @@
 			);
 			path = AppUITests;
 			sourceTree = "<group>";
+		};
+		0AEA32472494E10300F49418 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				0AEA32482494E10300F49418 /* ProgressHUD.h */,
+				0AEA32492494E10300F49418 /* ProgressHUD.bundle */,
+				0AEA324A2494E10300F49418 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
+			sourceTree = SOURCE_ROOT;
 		};
 		827F26A2B8D11E75B8E7BEA6 /* Pods */ = {
 			isa = PBXGroup;
@@ -331,6 +347,7 @@
 				0A975184248342C700DAACF4 /* LaunchScreen.storyboard in Resources */,
 				0A9751A82483439F00DAACF4 /* GoogleService-Info.plist in Resources */,
 				0A975181248342C700DAACF4 /* Assets.xcassets in Resources */,
+				0AEA324B2494E10300F49418 /* ProgressHUD.bundle in Resources */,
 				0A97517F248342C500DAACF4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +482,7 @@
 				0A2B39E7248C207900FC0E97 /* AddPropertyViewController.swift in Sources */,
 				0A9751B02483617200DAACF4 /* FUser.swift in Sources */,
 				0A97517C248342C500DAACF4 /* RegisterViewController.swift in Sources */,
+				0AEA324C2494E10300F49418 /* ProgressHUD.m in Sources */,
 				0A975178248342C500DAACF4 /* AppDelegate.swift in Sources */,
 				0A97517A248342C500DAACF4 /* SceneDelegate.swift in Sources */,
 				0A2B39E3248AC61B00FC0E97 /* PropertyCollectionViewCell.swift in Sources */,

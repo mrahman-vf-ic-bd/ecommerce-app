@@ -15,21 +15,23 @@ class AddPropertyViewController: UIViewController {
     
     @IBOutlet weak var referenceCodeTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var advertismentTypeTextField: UITextField!
+    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var propertyTypeTextField: UITextField!
+    @IBOutlet weak var balconySizeTextField: UITextField!
     @IBOutlet weak var roomsTextField: UITextField!
     @IBOutlet weak var bathroomsTextField: UITextField!
     @IBOutlet weak var propertySizeTextField: UITextField!
-    @IBOutlet weak var balconySizeTextField: UITextField!
+
     @IBOutlet weak var parkingTextField: UITextField!
     @IBOutlet weak var floorTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var countryTextField: UITextField!
-    @IBOutlet weak var advertismentTypeTextField: UITextField!
     @IBOutlet weak var availableFromTextField: UITextField!
     @IBOutlet weak var buildYearTextField: UITextField!
-    @IBOutlet weak var propertyTypeTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var priceTextField: UITextField!
+ 
     
     // Switch
     @IBOutlet weak var titleDeedSwitch: UISwitch!
@@ -39,6 +41,7 @@ class AddPropertyViewController: UIViewController {
     @IBOutlet weak var airConditionerSwitch: UISwitch!
     @IBOutlet weak var furnishedSwitch: UISwitch!
     
+    var user: FUser?
     var titleDeedSwitchValue = false
     var centralHeatingSwitchValue = false
     var solarWaterHeatingSwitchValue = false
@@ -57,12 +60,92 @@ class AddPropertyViewController: UIViewController {
     
     // MARK: IBActions
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        user = FUser.currentUser()!
+        if !user!.isAgent {
+            // check if user can post
+             save()
+        } else {
+            save()
+        }
     }
+    
+    
     @IBAction func cameraButtonPressed(_ sender: UIButton) {
     }
     @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
     }
     @IBAction func pinMapButtonPressed(_ sender: UIButton) {
+    }
+    
+    // MARK: Helper functions
+    func save() {
+        if titleTextField.text != "" && referenceCodeTextField.text != "" && advertismentTypeTextField.text != "" && propertyTypeTextField.text != "" && priceTextField.text != "" {
+            //create property
+            var newProperty = Property()
+            newProperty.referenceCode = referenceCodeTextField.text!
+            newProperty.ownerId = user!.objectId
+            newProperty.title = titleTextField.text!
+            newProperty.advertisementType = advertismentTypeTextField.text!
+            newProperty.price = Int(priceTextField.text!)!
+            newProperty.propertyType = propertyTypeTextField.text!
+            
+            if balconySizeTextField.text != "" {
+                newProperty.balconySize = Double(balconySizeTextField.text!)!
+            }
+    
+            if bathroomsTextField.text != "" {
+                newProperty.numberofBathrooms = Int(bathroomsTextField.text!)!
+            }
+            
+            if propertySizeTextField.text != "" {
+                newProperty.size = Double(propertySizeTextField.text!)!
+            }
+            
+            if parkingTextField.text != "" {
+                newProperty.parking = Int(parkingTextField.text!)!
+            }
+            if floorTextField.text != "" {
+                newProperty.floor = Int(floorTextField.text!)!
+            }
+            
+            if addressTextField.text != "" {
+                newProperty.address = addressTextField.text!
+            }
+            
+            if cityTextField.text != "" {
+                newProperty.city = cityTextField.text!
+            }
+            
+            if countryTextField.text != "" {
+                newProperty.country = countryTextField.text!
+            }
+            
+            if availableFromTextField.text != "" {
+                newProperty.availableForm = availableFromTextField.text!
+            }
+            
+            if buildYearTextField.text != "" {
+                newProperty.buildYear = buildYearTextField.text!
+            }
+            
+            if descriptionTextView.text != "" && descriptionTextView.text != "Description"{
+                newProperty.propertyDescription = descriptionTextView.text!
+            }
+            
+            newProperty.titleDeeds = titleDeedSwitchValue
+            newProperty.centralHeating = centralHeatingSwitchValue
+            newProperty.solarWaterHeating = solarWaterHeatingSwitchValue
+            newProperty.airConditioner = airConditionerSwitchValue
+            newProperty.storeRoom = storeRoomSwitchValue
+            newProperty.isFurnished = furnishedSwitchValue
+            
+            //Check for property images
+            
+            newProperty.saveProperty()
+            ProgressHUD.showSuccess("Saved!")
+        } else {
+            ProgressHUD.showError("Error: Missing required fields")
+        }
     }
     
     //Switches

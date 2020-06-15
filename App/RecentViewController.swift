@@ -28,14 +28,14 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: CollectionView Data Soruce
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 //properties.count
+        return properties.count
      }
      
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PropertyCollectionViewCell
         
-//        let property = properties[indexPath.row]
-//        cell.generateCell(property: property)
+        let property = properties[indexPath.row]
+        cell.generateCell(property: property)
         
         return cell
      }
@@ -47,10 +47,14 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
     //MARK: Load Properties
     
     func loadProperties(limitNumber: Int) {
+        print("Called load property")
         Property.fetchRecentProperties(limitNumber: limitNumber) { (allProperties) in
             if allProperties.count != 0 {
                 self.properties = allProperties as! [Property]
                 self.collectionView.reloadData()
+                print(self.properties[0].referenceCode)
+            } else {
+                print("No property")
             }
         }
     }
