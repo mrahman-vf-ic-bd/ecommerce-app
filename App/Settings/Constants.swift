@@ -12,6 +12,10 @@ import Firebase
 var backendless = Backendless.sharedInstance()
 var firebase = Database.database().reference()
 
+let propertyTypes = ["Select", "Apartment", "House", "Villa", "Land", "Flat"]
+let advertismentTypes = ["Select", "Sale", "Rent", "Exchange"]
+
+
 // IDS and Keys
 public let kONESIGNALAPPID = "98a5b201-66cb-4036-8cf8-7cae0a32011a"
 public let kFILEREFERENCE = "gs://myapp-e751c.appspot.com"
