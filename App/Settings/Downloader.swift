@@ -54,19 +54,26 @@ func uploadImages(images: [UIImage], userId: String, referenceNumber: String, wi
             
             var task: StorageUploadTask!
             task = storageRef.putData(picture, metadata: nil, completion: { (metadata, error) in
-                uploadCounter += 1
+                
+                storageRef.downloadURL { (url, error) in
+                    uploadCounter += 1
+                    if error != nil {
+                        return
+                    }
+                    let link = url?.absoluteURL.absoluteString
+                    linkString += link! + ","
+                    print("=>>> " + linkString)
+                    if uploadCounter == pictures.count {
+                        task.removeAllObservers()
+                        withBlock(linkString)
+                    }
+                }
+
                 if error != nil {
                     print("Error uploading picture \(error!.localizedDescription)")
                     return
                 }
-                
-                let link = kFILEREFERENCE + "/" +  metadata!.path!
-                linkString += link + ","
-                print("=>>> " + linkString)
-                if uploadCounter == pictures.count {
-                    task.removeAllObservers()
-                    withBlock(linkString)
-                }
+
             })
         }
 

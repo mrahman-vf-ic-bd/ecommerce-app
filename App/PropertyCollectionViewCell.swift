@@ -63,6 +63,16 @@ class PropertyCollectionViewCell: UICollectionViewCell {
         
         if property.imageLinks != "" && property.imageLinks != nil {
             // Download image
+            downloadImages(urls: property.imageLinks!) { (images) in
+                DispatchQueue.main.async {
+                    self.loadingIndicatorView.stopAnimating()
+                    self.loadingIndicatorView.isHidden = true
+                    if images.first != nil {
+                        self.imageView.image = images.first!
+                    }
+                }
+
+            }
         } else {
             self.imageView.image = UIImage(named: "propertyPlaceholder")
             self.loadingIndicatorView.stopAnimating()

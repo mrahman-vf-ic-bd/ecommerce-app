@@ -169,7 +169,7 @@ class AddPropertyViewController: UIViewController, ImagePickerDelegate {
     }
     func dismissView() {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "mainVC") as! UITabBarController
-        print("Presentation Style: \(vc.modalPresentationStyle)")
+        vc.modalPresentationStyle = .currentContext
         self.present(vc, animated: true, completion: nil)
     }
     //Switches
