@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import ImagePicker
 
-class AddPropertyViewController: UIViewController {
+class AddPropertyViewController: UIViewController, ImagePickerDelegate {
+
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -49,6 +51,8 @@ class AddPropertyViewController: UIViewController {
     var airConditionerSwitchValue = false
     var furnishedSwitchValue = false
     
+    var propertyImages: [UIImage] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,6 +75,10 @@ class AddPropertyViewController: UIViewController {
     
     
     @IBAction func cameraButtonPressed(_ sender: UIButton) {
+        let imagePickerController = ImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.imageLimit = kMAXIMUMIMAGENUMBER
+        present(imagePickerController, animated: true, completion: nil)
     }
     @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
     }
@@ -140,14 +148,30 @@ class AddPropertyViewController: UIViewController {
             newProperty.isFurnished = furnishedSwitchValue
             
             //Check for property images
-            
-            newProperty.saveProperty()
-            ProgressHUD.showSuccess("Saved!")
+            if propertyImages.count != 0 {
+                // upload image to firebase
+                uploadImages(images: propertyImages, userId: user!.objectId, referenceNumber: newProperty.referenceCode!) { (linkString) in
+                    newProperty.imageLinks = linkString
+                    print("inside save-> " + linkString)
+                    newProperty.saveProperty()
+                    ProgressHUD.showSuccess("Saved!")
+                    self.dismissView()
+                }
+            } else {
+                newProperty.saveProperty()
+                ProgressHUD.showSuccess("Saved!")
+                self.dismissView()
+            }
+
         } else {
             ProgressHUD.showError("Error: Missing required fields")
         }
     }
-    
+    func dismissView() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "mainVC") as! UITabBarController
+        print("Presentation Style: \(vc.modalPresentationStyle)")
+        self.present(vc, animated: true, completion: nil)
+    }
     //Switches
     @IBAction func titleDeedSwitch(_ sender: UISwitch) {
         titleDeedSwitchValue = !titleDeedSwitchValue
@@ -169,6 +193,21 @@ class AddPropertyViewController: UIViewController {
     }
     
     
+    //MARK: ImagePickerDelegate
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        print("Wrapper")
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+         print("Done")
+        self.propertyImages = images
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+         print("Cancel")
+        self.dismiss(animated: true, completion: nil)
+    }
     
     /*
     // MARK: - Navigation

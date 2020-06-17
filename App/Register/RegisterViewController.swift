@@ -94,6 +94,8 @@ class RegisterViewController: UIViewController {
     
     func goToApp() -> Void {
         let mainView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainVC")
+        mainView.modalPresentationStyle = .currentContext
+//        self.showDetailViewController(mainView, sender: nil)
         self.present(mainView, animated: true, completion: nil)
     }
 }

@@ -14,6 +14,7 @@ var firebase = Database.database().reference()
 
 // IDS and Keys
 public let kONESIGNALAPPID = "98a5b201-66cb-4036-8cf8-7cae0a32011a"
+public let kFILEREFERENCE = "gs://myapp-e751c.appspot.com"
 
 
 
