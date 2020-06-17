@@ -105,6 +105,10 @@ class AddPropertyViewController: UIViewController, ImagePickerDelegate {
                 newProperty.numberofBathrooms = Int(bathroomsTextField.text!)!
             }
             
+             if roomsTextField.text != "" {
+                 newProperty.numberOfRooms = Int(roomsTextField.text!)!
+             }
+            
             if propertySizeTextField.text != "" {
                 newProperty.size = Double(propertySizeTextField.text!)!
             }
