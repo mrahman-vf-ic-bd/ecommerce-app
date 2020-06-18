@@ -63,6 +63,13 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     var propertyImages: [UIImage] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        locationManagerStop()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -93,8 +100,10 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         present(imagePickerController, animated: true, completion: nil)
     }
     @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
+        locationMangerManagerStart()
     }
     @IBAction func pinMapButtonPressed(_ sender: UIButton) {
+        // show map so the user can pic a location
     }
     
     // MARK: Helper functions
@@ -167,6 +176,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                 newProperty.propertyDescription = descriptionTextView.text!
             }
             
+            if let currentCoordinate = locationCoordinates {
+                newProperty.latitude = currentCoordinate.latitude
+                newProperty.longitutde = currentCoordinate.longitude
+            }
+            
             newProperty.titleDeeds = titleDeedSwitchValue
             newProperty.centralHeating = centralHeatingSwitchValue
             newProperty.solarWaterHeating = solarWaterHeatingSwitchValue
@@ -194,6 +208,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             ProgressHUD.showError("Error: Missing required fields")
         }
     }
+
     func dismissView() {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "mainVC") as! UITabBarController
         vc.modalPresentationStyle = .currentContext
@@ -328,6 +343,53 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             buildYearTextField.text = "\(yearArray[row])"
         }
         
+    }
+
+    //MARK: Location Manager
+    func locationMangerManagerStart() {
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+            locationManager?.delegate = self
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager?.requestWhenInUseAuthorization()
+        }
+        locationManager?.startUpdatingLocation()
+    }
+    
+    func locationManagerStop() {
+        if locationManager != nil {
+            locationManager?.stopUpdatingLocation()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get the location")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+        case .authorizedAlways:
+            manager.startUpdatingLocation()
+        case .restricted:
+            // case like partial control
+            break
+        case .denied:
+            self.locationManager = nil
+            ProgressHUD.showError("Please enable location from the settings")
+            print("Location denied")
+            break
+        default:
+            break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("(\(locations.last!.coordinate.latitude), \(locations.last!.coordinate.longitude))")
+        self.locationCoordinates = locations.last!.coordinate
     }
     
     /*

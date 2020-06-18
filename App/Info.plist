@@ -81,5 +81,7 @@
 	<string>App wants to use the media</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App wants to use photo library</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App wants to use your current location</string>
 </dict>
 </plist>
